@@ -7,15 +7,12 @@ const kafka: Kafka = new Kafka({
 
 const producer = kafka.producer();
 
-const runKafka = async (res: any) => {
+const orderProducer = async (message: string) => {
   await producer.connect();
-
   await producer.send({
-    topic: "auth_topic",
-    messages: [{
-      value: JSON.stringify(res),
-    }]
+    topic: "order_topic",
+    messages: [{ value: message }],
   });
-}
+};
 
-export default runKafka;
+export default orderProducer;

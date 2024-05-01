@@ -22,8 +22,24 @@ const auth = async () => {
   });
 };
 
-const consumerKafka = {
-  auth
-}
+const inventory = async () => {
+  await consumer.connect();
+  await consumer.subscribe({ topic: "inventory_topic" });
 
-export default consumerKafka;
+  await consumer.run({
+    eachMessage: async ({ topic, partition, message }) => {
+      console.log({
+        partition,
+        offset: message.offset,
+        value: String(message.value),
+      });
+    },
+  });
+};
+
+const consumerKafka = {
+  auth,
+  inventory,
+};
+
+export default consumer;
