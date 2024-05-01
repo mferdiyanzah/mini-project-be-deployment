@@ -1,0 +1,5 @@
+# exclude node_modules in all subdirectories
+**/node_modules/**
+
+mysql
+postgres
