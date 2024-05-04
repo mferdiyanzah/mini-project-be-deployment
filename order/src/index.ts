@@ -1,14 +1,25 @@
 import express, { Express } from "express";
-import producerKafka from "./utils/producer";
-import consumerKafka from "./utils/consumer";
-
+import orderRouter from "./routes/order.route";
+import orderService from "./services/order.service";
 const app: Express = express();
 
-app.get("/", (req, res) => {
-  res.send("Hello from order service");
-});
+app.use(express.json());
+
+app.use("/", orderRouter);
+
+// app.post("/order", async (req, res) => {
+//   await producer.connect();
+//   console.log(req.body);
+
+//   await producer.send({
+//     topic: "inventory_topic",
+//     messages: [{ value: JSON.stringify(req.body) }],
+//   });
+//   res.send("Order service is up and running");
+// });
 
 
-app.listen(3002, () => {
+app.listen(3002, async () => {
   console.log("Order service listening on port 3002");
+  await orderService.runOrder().catch(console.error);
 });

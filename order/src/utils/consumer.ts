@@ -5,41 +5,29 @@ const kafka: Kafka = new Kafka({
   brokers: ["localhost:9092"],
 });
 
-const consumer = kafka.consumer({ groupId: "kafka" });
+const consumer = kafka.consumer({
+  groupId: "kafka",
+  heartbeatInterval: 3000,
+  maxBytesPerPartition: 1000000,
+});
 
-const auth = async () => {
-  await consumer.connect();
-  await consumer.subscribe({ topic: "auth_topic" });
+// const inventoryConsumer = async () => {
+//   await consumer.connect();
+//   await consumer.subscribe({ topic: "inventory_topic", fromBeginning: true });
 
-  await consumer.run({
-    eachMessage: async ({ topic, partition, message }) => {
-      console.log({
-        partition,
-        offset: message.offset,
-        value: String(message.value),
-      });
-    },
-  });
-};
+//   await consumer.run({
+//     eachMessage: async ({ topic, partition, message }) => {
+//       console.log({
+//         topic,
+//         partition,
+//         offset: message.offset,
+//         value: String(message.value),
+//       });
 
-const inventory = async () => {
-  await consumer.connect();
-  await consumer.subscribe({ topic: "inventory_topic" });
-
-  await consumer.run({
-    eachMessage: async ({ topic, partition, message }) => {
-      console.log({
-        partition,
-        offset: message.offset,
-        value: String(message.value),
-      });
-    },
-  });
-};
-
-const consumerKafka = {
-  auth,
-  inventory,
-};
+//       const order = JSON.parse(String(message.value));
+//       await orderService.create(order);
+//     },
+//   });
+// };
 
 export default consumer;

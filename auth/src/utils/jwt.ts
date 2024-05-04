@@ -2,9 +2,20 @@ import jwt from "jsonwebtoken";
 
 const generateToken = (id: number, email: string): string => {
   const payload = {
-    id, email,
+    id,
+    email,
+    key: '86R91rhx05ND05TQKDlvVkwHG9OuSN7U',
   };
-  return jwt.sign(payload, process.env.JWT_SECRET_KEY ?? "", { expiresIn: "1h", });
+  return jwt.sign(
+    payload,
+    'DMvF6vK1B1ZSsvrOVQeGXVsBE1PI9EYl',
+    {
+      algorithm: "HS256",
+      expiresIn: "1h",
+      issuer: '86R91rhx05ND05TQKDlvVkwHG9OuSN7U',
+      keyid: 'kid',
+    }
+  );
 };
 
 const decodeToken = (authHeader: string): jwt.JwtPayload => {

@@ -6,16 +6,17 @@ const register = async (user: UserRegisterRequest): Promise<number> => {
   return userRepository.register(user);
 }
 
-const login = async (user: UserRegisterRequest): Promise<string> => {
-  const result = await userRepository.login(user);
-
-  if (!result) {
-    throw new Error('Invalid email or password');
+const login = async (user: UserRegisterRequest): Promise<string | null> => {
+  const userFound = await userRepository.findUserByEmail(user.email);
+  if (!userFound) {
+    throw new Error("Invalid credentials");
   }
 
-  const token = generateToken(result.id, result.email);
+  if (user.password !== userFound.password) {
+    throw new Error("Invalid credentials");
+  }
 
-  return token;
+  return generateToken(userFound.id, userFound.email);
 }
 
 const userService = {

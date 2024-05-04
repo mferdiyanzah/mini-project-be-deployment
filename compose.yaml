@@ -100,11 +100,12 @@ services:
     ports:
       - "3310:3306"
     volumes:
-      - ./mysql:/var/lib/mysql
-      - ./seeder:/docker-entrypoint-initdb.d
+      - mysql_data:/var/lib/mysql
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
 
 volumes:
   db-data-kong-postgres:
+  mysql_data:
 
 networks:
   default:

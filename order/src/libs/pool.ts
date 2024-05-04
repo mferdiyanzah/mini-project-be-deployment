@@ -4,7 +4,7 @@ const config = {
   host: 'localhost',
   user: 'root',
   password: 'root',
-  database: 'auth_db',
+  database: 'order_db',
   port: 3310,
 }
 

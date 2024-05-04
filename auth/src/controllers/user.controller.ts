@@ -1,40 +1,44 @@
 import { Request, Response } from 'express';
-import { UserRegisterRequest } from '../models/user.model';
+import { UserLoginRequest, UserRegisterRequest } from '../models/user.model';
 import userService from '../services/user.service';
 
 const register = async (req: Request, res: Response) => {
   try {
     const userRegisterRequest = req.body as UserRegisterRequest;
 
-    const data = userService.register(userRegisterRequest);
+    const data = await userService.register(userRegisterRequest);
 
     res.json({
       status: 'success',
       data,
     });
   } catch (error) {
-    res.status(500).json({
-      status: 'error',
-      message: 'Internal server error',
-    });
+    if (error instanceof Error) {
+      res.status(400).json({
+        status: 'error',
+        message: error.message,
+      });
+    }
   }
 };
 
 const login = async (req: Request, res: Response) => {
   try {
-    const userRegisterRequest = req.body as UserRegisterRequest;
+    const userLoginRequest = req.body as UserLoginRequest
 
-    const data = userService.login(userRegisterRequest);
+    const data = await userService.login(userLoginRequest);
 
     res.json({
       status: 'success',
       data,
     });
   } catch (error) {
-    res.status(500).json({
-      status: 'error',
-      message: 'Internal server error',
-    });
+    if (error instanceof Error) {
+      res.status(400).json({
+        status: 'error',
+        message: error.message,
+      });
+    }
   }
 };
 

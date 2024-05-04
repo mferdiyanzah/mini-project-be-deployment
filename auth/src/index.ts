@@ -9,11 +9,7 @@ const app = express();
 
 app.use(express.json());
 
-app.use("/api/v1", router);
-
-app.get("/", (req, res) => {
-  res.send("Hello World from Auth Service");
-});
+app.use("/", router);
 
 app.get("/health", (req, res) => {
   res.send("OK");

@@ -12,13 +12,4 @@ const producer = kafka.producer({
   },
 });
 
-// const orderProducer = async (message: string) => {
-//   await producer.connect();
-//   await producer.send({
-//     topic: "order_topic",
-//     messages: [{ value: message }],
-//     acks: 1,
-//   });
-// };
-
 export default producer;

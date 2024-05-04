@@ -11,9 +11,4 @@ interface UserLoginRequest {
 
 interface UserRegisterRequest extends UserLoginRequest { }
 
-interface UserResponse {
-  id: number;
-  email: string;
-}
-
-export { UserModel, UserLoginRequest, UserRegisterRequest, UserResponse };
+export { UserModel, UserLoginRequest, UserRegisterRequest };
