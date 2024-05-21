@@ -1,8 +1,10 @@
 import { UserRegisterRequest } from "../models/user.model";
 import userRepository from "../repositories/user.repository"
+import { hashPassword, verifyPassword } from "../utils/crypto";
 import { generateToken } from "../utils/jwt";
 
 const register = async (user: UserRegisterRequest): Promise<number> => {
+  user.password = await hashPassword(user.password);
   return userRepository.register(user);
 }
 
@@ -12,7 +14,8 @@ const login = async (user: UserRegisterRequest): Promise<string | null> => {
     throw new Error("Invalid credentials");
   }
 
-  if (user.password !== userFound.password) {
+  const isPasswordValid = await verifyPassword(user.password, userFound.password);
+  if (!isPasswordValid) {
     throw new Error("Invalid credentials");
   }
 

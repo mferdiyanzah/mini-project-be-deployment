@@ -1,4 +1,5 @@
 import { Kafka } from "kafkajs";
+import inventoryRepository from "../repositories/inventory.repository";
 
 const kafka: Kafka = new Kafka({
   clientId: "bukabapak-service",
@@ -65,4 +66,17 @@ const processOrder = async (order: any): Promise<void> => {
   }
 };
 
-export default runInventory;
+const checkProduct = async (order: any): Promise<boolean> => {
+  return inventoryRepository.checkProduct(order) as Promise<boolean>;
+}
+
+const reduceProduct = async (order: any): Promise<void> => {
+  return inventoryRepository.reduceProduct(order) as Promise<void>;
+}
+
+const inventoryService = {
+  checkProduct,
+  reduceProduct,
+};
+
+export default inventoryService;

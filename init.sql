@@ -16,10 +16,16 @@ CREATE TABLE IF NOT EXISTS `product` (
   `id` INT PRIMARY KEY AUTO_INCREMENT,
   `name` VARCHAR(255),
   `price` DECIMAL(10, 2),
-  `quantity` INT,
+  `stock` INT,
   `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
+INSERT INTO `product` (`name`, `price`, `stock`)
+VALUES ('Product 1', 10.00, 100),
+  ('Product 2', 20.00, 200),
+  ('Product 3', 30.00, 300),
+  ('Product 4', 40.00, 400),
+  ('Product 5', 50.00, 500);
 USE auth_db;
 CREATE TABLE IF NOT EXISTS `user` (
   `id` INT PRIMARY KEY AUTO_INCREMENT,

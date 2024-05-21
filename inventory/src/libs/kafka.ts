@@ -11,5 +11,4 @@ const kafka: Kafka = new Kafka({
   },
 });
 
-
 export default kafka;
